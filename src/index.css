@@ -30,10 +30,15 @@ a, a:visited, a:hover {
 body {
   margin: 0;
   background-color: #8b62fc;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 #root {
-  position: absolute;
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -70,7 +75,10 @@ body {
   gap: 2rem;
 }
 
-.title, .instructions {
+.title,
+.instructions,
+.current-attempts,
+.best-score {
   text-align: center;
   margin: 0;
 }

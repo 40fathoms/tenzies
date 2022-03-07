@@ -17,10 +17,15 @@ a, a:visited, a:hover{
 body{
     margin: 0;  
     background-color: $primary-color;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 #root{ 
-    position: absolute;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;

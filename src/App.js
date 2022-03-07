@@ -11,12 +11,20 @@ function App() {
 
   // creating the endgame status state
   const [tenzies, setTenzies] = React.useState(false)
+  
+  // creating the current attempts state
+  const [attempts, setAttempts] = React.useState(0)
 
+  // creating the best score state
+  const [bestScore, setBestScore] = React.useState(
+    () => JSON.parse(localStorage.getItem("score")) || undefined
+  )
+  
   // effect to check if the game is over
   React.useEffect(() => {
     const allHeld = dice.every(die => die.isHeld)
     const allEqual = dice.every(die => die.value == dice[0].value)
-    {(allHeld && allEqual) && setTenzies(true)}    
+    {(allHeld && allEqual) && setTenzies(true)}  
   }, [dice])
 
   // function to generate the random dice elements
@@ -59,12 +67,19 @@ function App() {
     }))
   }
 
+  // function that uses localStorage to handle the best score and resets the attempts
+  function handleBestScore(attempts){
+    {((attempts < bestScore) || bestScore == undefined) && localStorage.setItem("score", JSON.stringify(attempts))}
+    setBestScore(JSON.parse(localStorage.getItem("score")))
+    setAttempts(0)
+  }
+
   return (
     <main className="tenzies">
 
       {tenzies && <Confetti />}
 
-      <h1 className="title">Tenzies</h1>
+      <h1 className="title">Tenzi</h1>
       <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
 
       <div className="dice">
@@ -75,15 +90,18 @@ function App() {
 
         <button
           className="roll"
-          onClick={() => {setDice(allNewDice()); setTenzies(false)}}
+          onClick={() => {setDice(allNewDice()); setTenzies(false); handleBestScore(attempts)}}
         >New Game</button> 
         :
         <button
           className="roll"
-          onClick={rollDice}
+          onClick={() => {rollDice(); setAttempts(attempts => attempts+1)}}
         >Roll</button>
 
       }
+
+      <h2 className="current-attempts">Current attempts: {attempts}</h2>
+      <h2 className="best-score">Best score: {bestScore}</h2>
 
     </main>
   );

@@ -21,7 +21,10 @@
     gap: 2rem;
 }
 
-.title, .instructions{
+.title, 
+.instructions,
+.current-attempts, 
+.best-score{
     text-align: center;   
     margin: 0;  
 }
